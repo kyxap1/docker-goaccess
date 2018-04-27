@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  goaccess:
+    image: allinurl/goaccess
+    restart: unless-stopped
+    container_name: goaccess_server
+    ports:
+      - "7890:7890"
+    volumes:
+      - data:/srv/data
+      - logs:/srv/logs
+      - report:/srv/report
+      - /home/nest-restored/var/log/nginx/access_log:/srv/logs/access.log:ro
+      - ./goaccess.conf:/srv/data/goaccess.conf:ro
+
+  nginx:
+    image: nginx
+    restart: unless-stopped
+    container_name: goaccess_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - report:/srv/report
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /home/nest-restored/etc/nginx/conf.d/kyxap.pro.htpasswd:/etc/nginx/conf.d/htpasswd:ro
+
+volumes:
+  data: {}
+  logs: {}
+  report: {}

@@ -2,6 +2,7 @@ version: '2'
 
 services:
   goaccess:
+    build: .
     image: kyxap/goaccess
     restart: unless-stopped
     container_name: goaccess_server

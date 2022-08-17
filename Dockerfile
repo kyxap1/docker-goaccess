@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.14.0
 
 WORKDIR /goaccess
 
@@ -6,7 +6,6 @@ ARG build_deps="build-base ncurses-dev autoconf automake git gettext-dev geoip-d
 ARG runtime_deps="tini ncurses libintl gettext openssl-dev geoip zlib libbz2"
 
 RUN apk add --no-cache -u $runtime_deps $build_deps && \
-    /etc/periodic/monthly/geoip && \
     git clone https://github.com/allinurl/goaccess /goaccess && \
     wget -nv http://fallabs.com/tokyocabinet/tokyocabinet-1.4.48.tar.gz -O - | tar zxf - && \
     cd tokyocabinet-1.4.48 && \
